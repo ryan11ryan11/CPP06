@@ -13,4 +13,5 @@ int main(int argc, char** argv)
         std::cerr << "Non printable char from input." << std::endl;
         return -1;
     }
+    ScalarConverter::convert(input);
 }
