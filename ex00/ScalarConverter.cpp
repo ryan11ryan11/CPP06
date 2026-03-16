@@ -12,20 +12,49 @@
 
 #include "ScalarConverter.hpp"
 
+ScalarConverter::ScalarConverter() {}
+ScalarConverter::~ScalarConverter() {}
+ScalarConverter::ScalarConverter(const ScalarConverter& obj) {}
+ScalarConverter& ScalarConverter::operator=(const ScalarConverter& obj) {}
+
 void ScalarConverter::convert(const std::string& input) {
-    errno = 0;
 	char *ptr;
 	double result;
+    e_type type;
 	result = strtod(input.c_str(), &ptr);
 
-    if (errno == HUGE_VAL) {
-        std::cerr << "Expands to positive double expression that indicates overflow, not necessarily representable as a float" << std::endl;
-        return ;
+    if (result == 0) {
+        type =
     }
+}
+
+ScalarConverter::e_type ScalarConverter::detectType(std::string& input) {
+	char **pointer;
+	double result = strtod(input.c_str(), pointer);
+
 	if (result == 0) {
-        std::cerr << "Error: Conversion was not successful" << std::endl;
-        return ;
-    }
-	if (*ptr == '\0')
-    if (*ptr == 'f' && *(ptr + 1) == '\0')
+		std::cerr << "No conversion can be performed" << std::endl;
+		return -1;
+	}
+	if (!isInvalid(input, *pointer)) {
+		std::cerr << "Bad input" << std::endl;
+		return -1;
+	}
+}
+
+bool ScalarConverter::isInvalid(std::string& input, char* c) {
+	if (*c != 'f' && *c != '\0')
+		return false;
+	return true;
+}
+
+bool ScalarConverter::isVaildInput(const std::string& input) {
+	char *ptr;
+	int result;
+	result = strtod(input.c_str(), &ptr);
+
+	if (result == 0)
+		return false;
+	if (result != 0 && *ptr == '\0')
+		return true;
 }

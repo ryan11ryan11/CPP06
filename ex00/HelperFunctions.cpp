@@ -8,18 +8,3 @@ bool isAllInputPrintable(const std::string& input) {
 	}
 	return true;
 }
-
-int detectType(std::string& input) {
-	
-}
-
-bool isVaildInput(const std::string& input) {
-	char *ptr;
-	int result;
-	result = strtod(input.c_str(), &ptr);
-
-	if (result == 0)
-		return false;
-	if (result != 0 && *ptr == '\0')
-		return true;
-}
