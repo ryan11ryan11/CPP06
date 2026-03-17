@@ -18,6 +18,7 @@
 #include <iomanip>
 #include <cstdlib> // ?????
 #include "HelperFunctions.hpp"
+#include <cfloat>
 
 class ScalarConverter 
 {
@@ -38,14 +39,15 @@ class ScalarConverter
         static e_type detectType(const std::string& input);
         static bool isInvalid(const std::string& input, const char* c, const size_t& pos_d);
         static bool isChar(const std::string& input);
-        static bool isInt(const size_t& pos_d);
+        static bool isInt(const std::string& input, const size_t& pos_d);
         static bool isInt(const double& val);
         static bool isDouble(const size_t& pos_d, const size_t& pos_f);
         static bool isFloat(const size_t& pos_d, const size_t& pos_f);
-        static void printChar(const double& val);
-        static void printInt(const double& val);
-        static void printFloat(const double& val);
+        static void printChar(const char& c);
+        static void printInt(const int& val);
+        static void printFloat(const float& val);
         static void printDouble(const double& val);
+        static void printImpossible(void);
 
     public:
         static void convert(const std::string& input); 

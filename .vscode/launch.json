@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "MY_PRIVATE_DEBUG_CONF",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "C:/CPP06/ex00/convert.exe",
+            "args": ["10e40"],
+            "stopAtEntry": false,
+            "cwd": "C:/CPP06/ex00",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "miDebuggerPath": "gdb.exe",
+            "logging": { "engineLogging": false },
+            "internalConsoleOptions": "neverOpen"
+        }
+    ]
+}

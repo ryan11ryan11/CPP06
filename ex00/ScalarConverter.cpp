@@ -23,9 +23,7 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& obj) {
 }
 
 void ScalarConverter::convert(const std::string& input) {
-	char *endPtr;
     errno = 0;
-	double result = std::strtod(input.c_str(), &endPtr);
 	e_type type = detectType(input);
 
     if (errno == ERANGE) {
@@ -35,38 +33,103 @@ void ScalarConverter::convert(const std::string& input) {
         std::cout << "double: " << "impossible" << std::endl;
         return ;
     }
-	std::cout << std::fixed << std::setprecision(1);
-
-    if (type == TYPE_PSEUDO) {
-        std::string double_str = input;
-        if (double_str == "-inff" || double_str == "+inff" || double_str == "nanf") {
-            double_str = double_str.substr(0, double_str.length() - 1);
-        }
-        std::cout << "char: impossible" << std::endl;
-        std::cout << "int: impossible" << std::endl;
-        std::cout << "float: " << double_str << "f" << std::endl;
-        std::cout << "double: " << double_str << std::endl;
-        return;
+    std::cout << std::fixed << std::setprecision(1);
+    switch (type) {
+        case (TYPE_ERROR): {
+            std::cerr << "Incorrect input. only the decimal notation is allowed for this project" << std::endl;
+        } break;
+        case (TYPE_CHAR): {
+            char c = input[0];
+            printChar(c);
+        } break;
+        case (TYPE_PSEUDO): {
+            std::string double_str = input;
+            if (double_str == "-inff" || double_str == "+inff" || double_str == "nanf") {
+                double_str = double_str.substr(0, double_str.length() - 1);
+            }
+            std::cout << "char: impossible" << std::endl;
+            std::cout << "int: impossible" << std::endl;
+            std::cout << "float: " << double_str << "f" << std::endl;
+            std::cout << "double: " << double_str << std::endl;
+            return;
+        } break;
+        case (TYPE_INT): {
+            long l = strtol(input.c_str(), NULL, 10);
+            if (l > INT_MAX || l < INT_MIN) {
+                printImpossible();
+                return ;
+            } else {
+                int i = static_cast<int>(l);
+                printInt(i);
+            }
+        } break;
+        case (TYPE_FLOAT): {
+            double d = std::strtod(input.c_str(), NULL);
+            if (d > FLT_MAX || d < -FLT_MAX) {
+                printImpossible();
+            } else {
+                float f = static_cast<float>(d);
+                printFloat(f);
+            }
+        } break;
+        case (TYPE_DOUBLE): {
+            double d = std::strtod(input.c_str(), NULL);
+            if (errno == ERANGE) {
+                printImpossible();
+            } else {
+                printDouble(d);
+            }
+        } break;
     }
-	if (type == TYPE_CHAR) {
-        result = static_cast<double>(input[0]);
-	}
-	if (type == TYPE_ERROR) {
-		std::cerr << "Incorrect input. only the decimal notation is allowed for this project" << std::endl;
-        return ;
-	}
-    printChar(result);
-	printInt(result);
-    printFloat(result);
-    printDouble(result);
 }
 
-void ScalarConverter::printFloat(const double& val) {
-    std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
+void ScalarConverter::printImpossible(void) {
+    std::cout << "char: impossible"  << std::endl;
+    std::cout << "int: impossible"  << std::endl;
+    std::cout << "float: impossible"  << std::endl;
+    std::cout << "double: impossible"  << std::endl;
 }
 
 void ScalarConverter::printDouble(const double& val) {
-    std::cout << "double: " << val << std::endl;
+    if (val > 127 || val < 0) {
+        std::cout << "char: impossible"  << std::endl;
+    } else {
+        if (isprint(static_cast<unsigned char>(val))) {
+            std::cout << "char: '" << static_cast<char>(val) << "'"  << std::endl;
+        } else {
+            std::cout << "char: Non displayable"  << std::endl;
+        }
+    }
+    if (val > INT_MAX || val < INT_MIN) {
+        std::cout << "int: impossible"  << std::endl;
+    } else {
+        std::cout << "int: " << static_cast<int>(val) << std::endl;
+    }
+    if (val > FLT_MAX || val < -FLT_MAX) {
+        std::cout << "float: impossible" << std::endl;
+    } else {
+        std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
+    }
+    std::cout << "double: "  << val << std::endl;
+}
+
+void ScalarConverter::printFloat(const float& val) {
+    if (val > 127 || val < 0) {
+        std::cout << "char: impossible"  << std::endl;
+    } else {
+        if (isprint(static_cast<unsigned char>(val))) {
+            std::cout << "char: '" << static_cast<char>(val) << "'"  << std::endl;
+        } else {
+            std::cout << "char: Non displayable"  << std::endl;
+        }
+    }
+    if (val > INT_MAX || val < INT_MIN) {
+        std::cout << "int: impossible"  << std::endl;
+    } else {
+        std::cout << "int: " << static_cast<int>(val) << std::endl;
+    }
+    std::cout << "float: " << val << "f" << std::endl;
+    std::cout << "double: "  << static_cast<double>(val) << std::endl;
 }
 
 ScalarConverter::e_type ScalarConverter::detectType(const std::string& input) {
@@ -86,7 +149,7 @@ ScalarConverter::e_type ScalarConverter::detectType(const std::string& input) {
 	if (isInvalid(input, endPtr, pos_d)) {
 		return TYPE_ERROR;
 	}
-	if (isInt(pos_d)) {
+	if (isInt(input, pos_d)) {
 		return TYPE_INT;
 	}
 	if (isDouble(pos_d, pos_f)) {
@@ -98,24 +161,26 @@ ScalarConverter::e_type ScalarConverter::detectType(const std::string& input) {
 	return TYPE_ERROR;
 }
 
-void ScalarConverter::printChar(const double& val) {
-    if (isInt(val) &&  (0 <= val && val <= 127)) {
-        if (std::isprint(static_cast<unsigned char>(val))) {
-            std::cout << "char: " << static_cast<unsigned char>(val) << std::endl;
+void ScalarConverter::printChar(const char& c) {
+    std::cout << "char: '" << c << "'" << std::endl;
+    std::cout << "int: " << static_cast<int>(c) << std::endl;
+    std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
+    std::cout << "double: " << static_cast<double>(c) << std::endl;
+}
+
+void ScalarConverter::printInt(const int& val) {
+    if (val > 127 || val < 0) {
+        std::cout << "char: impossible"  << std::endl;
+    } else {
+        if (isprint(static_cast<unsigned char>(val))) {
+            std::cout << "char: '" << static_cast<char>(val) << "'"  << std::endl;
         } else {
             std::cout << "char: Non displayable"  << std::endl;
         }
-    } else {
-        std::cout << "char: " << "impossible" << std::endl;
-    }  
-}
-
-void ScalarConverter::printInt(const double& val) {
-    if (val > INT_MAX || val < INT_MIN) {
-        std::cout << "int: impossible"  << std::endl;
-        return ;
     }
-    std::cout << "int: " << static_cast<int>(val) << std::endl;
+    std::cout << "int: " << static_cast<int>(val)  << std::endl;
+    std::cout << "float: " << static_cast<float>(val) << "f"  << std::endl;
+    std::cout << "double: " << static_cast<double>(val)  << std::endl;
 }
 
 bool ScalarConverter::isChar(const std::string& input) {
@@ -124,9 +189,12 @@ bool ScalarConverter::isChar(const std::string& input) {
 	return false;
 }
 
-bool ScalarConverter::isInt(const size_t& pos_d) {	
-	if (pos_d == std::string::npos)
-		return true;
+bool ScalarConverter::isInt(const std::string& input, const size_t& pos_d) {	
+    if (input.find_first_of("eE") == std::string::npos) {    
+        if (pos_d == std::string::npos) {
+            return true;
+        }
+    }
 	return false;
 }
 

@@ -1,0 +1,16 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "MAKE_BUILD_TASK",
+            "type": "shell",
+            "command": "mingw32-make",
+            "args": ["-C", "${workspaceFolder}/ex00", "re"],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": ["$gcc"]
+        }
+    ]
+}
