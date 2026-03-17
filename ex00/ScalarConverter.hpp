@@ -44,6 +44,8 @@ class ScalarConverter
         static bool isFloat(const size_t& pos_d, const size_t& pos_f);
         static void printChar(const double& val);
         static void printInt(const double& val);
+        static void printFloat(const double& val);
+        static void printDouble(const double& val);
 
     public:
         static void convert(const std::string& input); 

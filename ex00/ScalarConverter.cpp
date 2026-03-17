@@ -38,38 +38,35 @@ void ScalarConverter::convert(const std::string& input) {
 	std::cout << std::fixed << std::setprecision(1);
 
     if (type == TYPE_PSEUDO) {
-        std::cout << "char: " << "impossible" << std::endl;
-        std::cout << "int: " << "impossible" << std::endl;
-        std::cout << "float: " << input << "f" << std::endl;
-        std::cout << "double: " << input << std::endl;
+        std::string double_str = input;
+        if (double_str == "-inff" || double_str == "+inff" || double_str == "nanf") {
+            double_str = double_str.substr(0, double_str.length() - 1);
+        }
+        std::cout << "char: impossible" << std::endl;
+        std::cout << "int: impossible" << std::endl;
+        std::cout << "float: " << double_str << "f" << std::endl;
+        std::cout << "double: " << double_str << std::endl;
+        return;
     }
 	if (type == TYPE_CHAR) {
-        std::cout << "char: " << input << std::endl;
-		printInt(result);
-		std::cout << "float: " << static_cast<float>(input[0]) << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(input[0]) << std::endl;
+        result = static_cast<double>(input[0]);
 	}
 	if (type == TYPE_ERROR) {
 		std::cerr << "Incorrect input. only the decimal notation is allowed for this project" << std::endl;
+        return ;
 	}
-	if (type == TYPE_DOUBLE) {
-        printChar(result);
-		printInt(result);
-		std::cout << "float: " << static_cast<float>(result) << "f" << std::endl;
-		std::cout << "double: " << result << std::endl;
-	}
-	if (type == TYPE_FLOAT) {
-        printChar(result);
-        printInt(result);
-		std::cout << "float: " << result << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(result) << std::endl;
-	}
-	if (type == TYPE_INT) {
-        printChar(result);
-		printInt(result);
-		std::cout << "float: " << static_cast<float>(result) << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(result) << std::endl;
-	}
+    printChar(result);
+	printInt(result);
+    printFloat(result);
+    printDouble(result);
+}
+
+void ScalarConverter::printFloat(const double& val) {
+    std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
+}
+
+void ScalarConverter::printDouble(const double& val) {
+    std::cout << "double: " << val << std::endl;
 }
 
 ScalarConverter::e_type ScalarConverter::detectType(const std::string& input) {
