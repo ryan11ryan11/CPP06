@@ -13,8 +13,10 @@
 #pragma once
 #include <iostream>
 #include <cerrno>
+#include <climits>
 #include <cmath>
 #include <iomanip>
+#include <cstdlib> // ?????
 #include "HelperFunctions.hpp"
 
 class ScalarConverter 
@@ -25,8 +27,8 @@ class ScalarConverter
                 TYPE_INT,
                 TYPE_FLOAT,
                 TYPE_DOUBLE,
-                TYPE_NOT_POSSIBLE,
-                TYPE_ERROR
+                TYPE_ERROR,
+                TYPE_PSEUDO
             };
         ScalarConverter();
         ~ScalarConverter();
@@ -37,9 +39,11 @@ class ScalarConverter
         static bool isInvalid(const std::string& input, const char* c, const size_t& pos_d);
         static bool isChar(const std::string& input);
         static bool isInt(const size_t& pos_d);
+        static bool isInt(const double& val);
         static bool isDouble(const size_t& pos_d, const size_t& pos_f);
         static bool isFloat(const size_t& pos_d, const size_t& pos_f);
-        static void print(const double& result);
+        static void printChar(const double& val);
+        static void printInt(const double& val);
 
     public:
         static void convert(const std::string& input); 

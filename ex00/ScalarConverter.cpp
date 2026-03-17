@@ -24,53 +24,63 @@ ScalarConverter& ScalarConverter::operator=(const ScalarConverter& obj) {
 
 void ScalarConverter::convert(const std::string& input) {
 	char *endPtr;
-	double result = strtod(input.c_str(), &endPtr);
+    errno = 0;
+	double result = std::strtod(input.c_str(), &endPtr);
 	e_type type = detectType(input);
 
+    if (errno == ERANGE) {
+        std::cout << "char: " << "impossible" << std::endl;
+        std::cout << "int: " << "impossible" << std::endl;
+        std::cout << "float: " << "impossible" << std::endl;
+        std::cout << "double: " << "impossible" << std::endl;
+        return ;
+    }
 	std::cout << std::fixed << std::setprecision(1);
 
+    if (type == TYPE_PSEUDO) {
+        std::cout << "char: " << "impossible" << std::endl;
+        std::cout << "int: " << "impossible" << std::endl;
+        std::cout << "float: " << input << "f" << std::endl;
+        std::cout << "double: " << input << std::endl;
+    }
 	if (type == TYPE_CHAR) {
-		std::cout << "char: " << input << std::endl;
-		std::cout << "int: " << static_cast<int>(result) << std::endl;
-		std::cout << "float: " << static_cast<float>(result) << "f" << std::endl;
-		std::cout << "double: " << static_cast<double>(result) << std::endl;
+        std::cout << "char: " << input << std::endl;
+		printInt(result);
+		std::cout << "float: " << static_cast<float>(input[0]) << "f" << std::endl;
+		std::cout << "double: " << static_cast<double>(input[0]) << std::endl;
 	}
 	if (type == TYPE_ERROR) {
 		std::cerr << "Incorrect input. only the decimal notation is allowed for this project" << std::endl;
 	}
 	if (type == TYPE_DOUBLE) {
-		std::cout << "char: " << static_cast<char>(result) << std::endl;
-		std::cout << "int: " << static_cast<int>(result) << std::endl;
+        printChar(result);
+		printInt(result);
 		std::cout << "float: " << static_cast<float>(result) << "f" << std::endl;
 		std::cout << "double: " << result << std::endl;
 	}
 	if (type == TYPE_FLOAT) {
-		std::cout << "char: " << static_cast<char>(result) << std::endl;
-		std::cout << "int: " << static_cast<int>(result) << std::endl;
+        printChar(result);
+        printInt(result);
 		std::cout << "float: " << result << "f" << std::endl;
 		std::cout << "double: " << static_cast<double>(result) << std::endl;
 	}
 	if (type == TYPE_INT) {
-		std::cout << "char: " << static_cast<char>(result) << std::endl;
-		std::cout << "int: " << result << std::endl;
+        printChar(result);
+		printInt(result);
 		std::cout << "float: " << static_cast<float>(result) << "f" << std::endl;
 		std::cout << "double: " << static_cast<double>(result) << std::endl;
 	}
-	if (type == TYPE_NOT_POSSIBLE) {
-		std::cerr << "No conversion can be performed" << std::endl;
-	}
-}
-
-void ScalarConverter::print(const double& result) {
-	std::cout << "int: " <<static_cast<int>(result) << std::endl;
 }
 
 ScalarConverter::e_type ScalarConverter::detectType(const std::string& input) {
 	char *endPtr;
-	double result = strtod(input.c_str(), &endPtr);
+    strtod(input.c_str(), &endPtr);
 	size_t pos_d = input.find('.');
 	size_t pos_f = input.find('f');
 
+    if (input == "-inf" || input == "+inf" || input == "-inff" || input == "+inff" || input == "nan" || input == "nanf") {
+        return TYPE_PSEUDO;
+    }
 	if (pos_f == std::string::npos)
 		pos_f = input.find('F');
 	if (isChar(input)) {
@@ -78,9 +88,6 @@ ScalarConverter::e_type ScalarConverter::detectType(const std::string& input) {
 	}
 	if (isInvalid(input, endPtr, pos_d)) {
 		return TYPE_ERROR;
-	}
-	if (result == 0) {
-		return TYPE_NOT_POSSIBLE;
 	}
 	if (isInt(pos_d)) {
 		return TYPE_INT;
@@ -94,6 +101,26 @@ ScalarConverter::e_type ScalarConverter::detectType(const std::string& input) {
 	return TYPE_ERROR;
 }
 
+void ScalarConverter::printChar(const double& val) {
+    if (isInt(val) &&  (0 <= val && val <= 127)) {
+        if (std::isprint(static_cast<unsigned char>(val))) {
+            std::cout << "char: " << static_cast<unsigned char>(val) << std::endl;
+        } else {
+            std::cout << "char: Non displayable"  << std::endl;
+        }
+    } else {
+        std::cout << "char: " << "impossible" << std::endl;
+    }  
+}
+
+void ScalarConverter::printInt(const double& val) {
+    if (val > INT_MAX || val < INT_MIN) {
+        std::cout << "int: impossible"  << std::endl;
+        return ;
+    }
+    std::cout << "int: " << static_cast<int>(val) << std::endl;
+}
+
 bool ScalarConverter::isChar(const std::string& input) {
 	if (input.length() == 1 && !std::isdigit(input[0]))
 		return true;
@@ -105,6 +132,11 @@ bool ScalarConverter::isInt(const size_t& pos_d) {
 		return true;
 	return false;
 }
+
+bool ScalarConverter::isInt(const double& val) {
+    return (std::floor(val) == val);
+}
+
 
 bool ScalarConverter::isDouble(const size_t& pos_d, const size_t& pos_f) {
 	if (pos_d != std::string::npos && pos_f == std::string::npos)
