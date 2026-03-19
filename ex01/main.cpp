@@ -1,4 +1,5 @@
 #include <iostream>
+#include "HelperFunctions.hpp"
 #include "ScalarConverter.hpp"
 #include <string>
 

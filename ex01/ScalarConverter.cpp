@@ -6,7 +6,7 @@
 /*   By: junhhong <junhhong@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 13:06:34 by junhhong          #+#    #+#             */
-/*   Updated: 2026/03/19 16:51:26 by junhhong         ###   ########.fr       */
+/*   Updated: 2026/03/19 16:34:26 by junhhong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -234,4 +234,3 @@ bool ScalarConverter::isInvalid(const std::string& input, const char* c, const s
 	}
 	return true;
 }
-
