@@ -6,7 +6,7 @@
 /*   By: junhhong <junhhong@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 13:06:34 by junhhong          #+#    #+#             */
-/*   Updated: 2026/03/16 18:01:06 by junhhong         ###   ########.fr       */
+/*   Updated: 2026/03/19 14:58:23 by junhhong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ void ScalarConverter::printDouble(const double& val) {
             std::cout << "char: Non displayable"  << std::endl;
         }
     }
-    if (val > INT_MAX || val < INT_MIN) {
+    if (static_cast<double>(val) > static_cast<double>(INT_MAX) || static_cast<double>(val) < static_cast<double>(INT_MIN)) {
         std::cout << "int: impossible"  << std::endl;
     } else {
         std::cout << "int: " << static_cast<int>(val) << std::endl;
@@ -123,7 +123,7 @@ void ScalarConverter::printFloat(const float& val) {
             std::cout << "char: Non displayable"  << std::endl;
         }
     }
-    if (val > INT_MAX || val < INT_MIN) {
+    if (static_cast<double>(val) > static_cast<double>(INT_MAX) || static_cast<double>(val) < static_cast<double>(INT_MIN)) {
         std::cout << "int: impossible"  << std::endl;
     } else {
         std::cout << "int: " << static_cast<int>(val) << std::endl;

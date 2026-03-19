@@ -1,20 +1,52 @@
+// {
+//     "version": "0.2.0",
+//     "configurations": [
+//         {
+//             "name": "MY_PRIVATE_DEBUG_CONF",
+//             "type": "cppdbg",
+//             "request": "launch",
+//             "program": "C:/CPP06/ex00/convert.exe",
+//             "args": ["10e40"],
+//             "stopAtEntry": false,
+//             "cwd": "C:/CPP06/ex00",
+//             "environment": [],
+//             "externalConsole": true,
+//             "MIMode": "gdb",
+//             "miDebuggerPath": "gdb.exe",
+//             "logging": { "engineLogging": false },
+//             "internalConsoleOptions": "neverOpen"
+//         }
+//     ]
+// }
+
 {
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "MY_PRIVATE_DEBUG_CONF",
+            "name": "C++ Debug (ex00)",
             "type": "cppdbg",
             "request": "launch",
-            "program": "C:/CPP06/ex00/convert.exe",
-            "args": ["10e40"],
+            // 빌드된 실행 파일의 경로
+            "program": "${workspaceFolder}/ex00/main",
+            "args": ["10e10"],
             "stopAtEntry": false,
-            "cwd": "C:/CPP06/ex00",
+            // 실행될 작업 디렉토리
+            "cwd": "${workspaceFolder}/ex00",
             "environment": [],
-            "externalConsole": true,
-            "MIMode": "gdb",
-            "miDebuggerPath": "gdb.exe",
-            "logging": { "engineLogging": false },
-            "internalConsoleOptions": "neverOpen"
+            "externalConsole": false,
+            // --- 운영체제에 따라 아래 두 항목 확인 ---
+            "MIMode": "gdb", 
+            "miDebuggerPath": "/usr/bin/gdb", 
+            // ---------------------------------------
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            // 디버깅 시작 전 tasks.json에 정의된 빌드 작업을 먼저 수행
+            "preLaunchTask": "make re"
         }
     ]
 }
