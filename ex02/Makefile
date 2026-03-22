@@ -31,7 +31,7 @@ NAME = main.exe
 CC = g++
 # Using gnu++98 to bypass MinGW 6.3.0 header bugs while maintaining C++98 compatibility 
 CPPFLAGS = -Wall -Wextra -Werror -std=gnu++98 -pedantic -g3 -O0
-SRC = main.cpp Serializer.cpp
+SRC = main.cpp Base.cpp
 OBJ = $(SRC:.cpp=.o)
 
 all: $(NAME)
