@@ -1,6 +1,6 @@
 NAME = main
 CC = g++
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g3 -O0
 SRC = main.cpp HelperFunctions.cpp ScalarConverter.cpp
 OBJ = $(SRC:.cpp=.o)
 
