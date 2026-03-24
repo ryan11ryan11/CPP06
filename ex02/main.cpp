@@ -1,9 +1,11 @@
 #include "Base.hpp"
-#include "helper.hpp"
+#include "Helper.hpp"
 
 int main(){
-    Base* baseClass = NULL;
+	Base* baseClass;
 
-    baseClass = generate();
-    return 0;
+	baseClass = generate();
+	identify(baseClass);
+	identify(*baseClass);
+	return 0;
 }
