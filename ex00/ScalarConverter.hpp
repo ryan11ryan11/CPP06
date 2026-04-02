@@ -6,19 +6,13 @@
 /*   By: junhhong <junhhong@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 13:06:29 by junhhong          #+#    #+#             */
-/*   Updated: 2026/03/24 14:27:46 by junhhong         ###   ########.fr       */
+/*   Updated: 2026/03/24 14:35:02 by junhhong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#pragma once
-#include <iostream>
-#include <cerrno>
-#include <climits>
-#include <cmath>
-#include <iomanip>
-#include <cstdlib>
+#ifndef SCALARCONVERTER_HPP
+# define SCALARCONVERTER_HPP
 #include "HelperFunctions.hpp"
-#include <cfloat>
 
 class ScalarConverter 
 {
@@ -31,3 +25,5 @@ class ScalarConverter
 	public:
 		static void convert(const std::string& input); 
 };
+
+#endif

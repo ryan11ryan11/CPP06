@@ -28,7 +28,7 @@
             "request": "launch",
             // 빌드된 실행 파일의 경로
             "program": "${workspaceFolder}/ex00/main",
-            "args": ["10e10"],
+            "args": ["12."],
             "stopAtEntry": false,
             // 실행될 작업 디렉토리
             "cwd": "${workspaceFolder}/ex00",

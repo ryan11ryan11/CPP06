@@ -6,7 +6,7 @@
 /*   By: junhhong <junhhong@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 13:06:34 by junhhong          #+#    #+#             */
-/*   Updated: 2026/03/24 14:22:37 by junhhong         ###   ########.fr       */
+/*   Updated: 2026/03/24 14:51:50 by junhhong         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void ScalarConverter::convert(const std::string& input) {
 		std::cout << "double: " << "impossible" << std::endl;
 		return ;
 	}
-	std::cout << std::fixed << std::setprecision(1);
 	switch (type) {
 		case (TYPE_ERROR): {
 			std::cerr << "Incorrect input. only the decimal notation is allowed for this project" << std::endl;

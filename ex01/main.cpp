@@ -4,7 +4,7 @@ int main()
 {
     // 1. Create a non-empty Data structure 
     Serializer::Data myData;
-    myData.name = "42 Common Core";
+    myData.name = "TEST STRING";
 
     Serializer::Data* originalPtr = &myData;
 

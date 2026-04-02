@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   Helper.cpp                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junhhong <junhhong@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/02 13:20:30 by junhhong          #+#    #+#             */
+/*   Updated: 2026/04/02 13:20:31 by junhhong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "Helper.hpp"
 
 Base* generate(void) {
@@ -7,12 +19,21 @@ Base* generate(void) {
 	int choice = std::rand() % 3;
 	std::cout << "Random choice: " << choice << std::endl;
 	switch (choice) {
-		case 0: result = new A;
-		break;
-		case 1: result = new B;
-		break;
-		case 2: result = new C;
-		break;
+		case 0: {
+			result = new A;
+			std::cout << "Class A has made" << std::endl;
+			break;
+		}
+		case 1: {
+			result = new B;
+			std::cout << "Class B has made" << std::endl;
+			break;
+		}
+		case 2: {
+			result = new C;
+			std::cout << "Class C has made" << std::endl;
+			break;
+		}
 		default:
 			return NULL;
 	}

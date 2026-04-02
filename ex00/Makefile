@@ -1,18 +1,16 @@
-NAME = main
-CC = g++
-CPPFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic -g3 -O0
-SRC = main.cpp HelperFunctions.cpp ScalarConverter.cpp
-OBJ = $(SRC:.cpp=.o)
+NAME		= main
+CXX			= c++
+CXXFLAGS	= -Wall -Wextra -Werror -std=c++98
+SRC			= main.cpp HelperFunctions.cpp ScalarConverter.cpp
+OBJ			= $(SRC:.cpp=.o)
 
 all: $(NAME)
 
-# CRITICAL: -g must be here during linking
 $(NAME): $(OBJ)
-	$(CC) $(OBJ) -o $(NAME) $(CPPFLAGS)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(NAME)
 
-# CRITICAL: -g must be here during compilation
 %.o: %.cpp
-	$(CC) $(CPPFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	rm -f $(OBJ)

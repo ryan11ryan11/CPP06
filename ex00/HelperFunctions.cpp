@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   HelperFunctions.cpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junhhong <junhhong@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/24 14:36:32 by junhhong          #+#    #+#             */
+/*   Updated: 2026/04/02 12:26:33 by junhhong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "HelperFunctions.hpp"
 
 bool isAllInputPrintable(const std::string& input) {
@@ -34,9 +46,15 @@ void printDouble(const double& val) {
 	if (val > FLT_MAX || val < -FLT_MAX) {
 		std::cout << "float: impossible" << std::endl;
 	} else {
-		std::cout << "float: " << static_cast<float>(val) << "f" << std::endl;
+		std::cout << "float: " << static_cast<float>(val);
+		if (val == std::floor(val))
+			std::cout << ".0";
+		std::cout << "f" << std::endl;
 	}
-	std::cout << "double: "  << val << std::endl;
+	std::cout << "double: "  << val;
+	if (val == std::floor(val))
+		std::cout << ".0";
+	std::cout << std::endl;
 }
 
 void printFloat(const float& val) {
@@ -54,8 +72,15 @@ void printFloat(const float& val) {
 	} else {
 		std::cout << "int: " << static_cast<int>(val) << std::endl;
 	}
-	std::cout << "float: " << val << "f" << std::endl;
-	std::cout << "double: "  << static_cast<double>(val) << std::endl;
+	std::cout << "float: " << val;
+	if (val == std::floor(val))
+		std::cout << ".0";
+	std::cout << "f" << std::endl;
+
+	std::cout << "double: " << static_cast<double>(val);
+    if (val == std::floor(val))
+        std::cout << ".0";
+    std::cout << std::endl;
 }
 
 e_type detectType(const std::string& input) {
@@ -73,7 +98,7 @@ e_type detectType(const std::string& input) {
 		return TYPE_CHAR;
 	}
 	if (isInvalid(input, endPtr, pos_d)) {
-		return TYPE_ERROR;
+		return TYPE_ERROR; 
 	}
 	if (isInt(input, pos_d)) {
 		return TYPE_INT;
@@ -105,8 +130,8 @@ void printInt(const int& val) {
 		}
 	}
 	std::cout << "int: " << static_cast<int>(val)  << std::endl;
-	std::cout << "float: " << static_cast<float>(val) << "f"  << std::endl;
-	std::cout << "double: " << static_cast<double>(val)  << std::endl;
+	std::cout << "float: " << static_cast<float>(val) << ".0f"  << std::endl;
+	std::cout << "double: " << static_cast<double>(val)  << ".0" << std::endl;
 }
 
 bool isChar(const std::string& input) {
@@ -146,7 +171,7 @@ bool isFloat(const std::string& input, const size_t& pos_d, const size_t& pos_f)
 
 bool isInvalid(const std::string& input, const char* c, const size_t& pos_d) {
 	std::string allowed = "0123456789.eEfF+-";
-	size_t pos_e = input.find("eE");
+	size_t pos_e = input.find_first_of("eE");
 
 	if (input.find_first_not_of(allowed) != std::string::npos)
 		return true;

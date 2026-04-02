@@ -1,5 +1,25 @@
-#pragma once
-#include "ScalarConverter.hpp"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   HelperFunctions.hpp                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: junhhong <junhhong@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/03/24 14:36:40 by junhhong          #+#    #+#             */
+/*   Updated: 2026/03/24 14:36:41 by junhhong         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#ifndef HELPERFUNCTIONS_HPP
+# define HELPERFUNCTIONS_HPP
+
+#include <iostream>
+#include <cerrno>
+#include <climits>
+#include <cmath>
+#include <iomanip>
+#include <cstdlib>
+#include <cfloat>
 
 enum e_type {
 		TYPE_CHAR,
@@ -23,3 +43,5 @@ void printInt(const int& val);
 void printFloat(const float& val);
 void printDouble(const double& val);
 void printImpossible(void);
+
+#endif
